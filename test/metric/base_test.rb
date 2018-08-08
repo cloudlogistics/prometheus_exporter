@@ -18,10 +18,10 @@ module PrometheusExporter::Metric
       Base.default_prefix = 'web_'
       counter.observe
 
-      text = <<~TEXT
-        # HELP web_a_counter my amazing counter
-        # TYPE web_a_counter counter
-        web_a_counter 1
+      text = <<-TEXT
+# HELP web_a_counter my amazing counter
+# TYPE web_a_counter counter
+web_a_counter 1
       TEXT
 
       assert_equal(counter.to_prometheus_text, text)
@@ -33,11 +33,11 @@ module PrometheusExporter::Metric
       counter.observe(2, baz: "bar")
       counter.observe
 
-      text = <<~TEXT
-        # HELP a_counter my amazing counter
-        # TYPE a_counter counter
-        a_counter{baz="bar",foo="bar"} 2
-        a_counter{foo="bar"} 1
+      text = <<-TEXT
+# HELP a_counter my amazing counter
+# TYPE a_counter counter
+a_counter{baz="bar",foo="bar"} 2
+a_counter{foo="bar"} 1
       TEXT
 
       assert_equal(counter.to_prometheus_text, text)

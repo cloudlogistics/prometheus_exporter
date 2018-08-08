@@ -121,11 +121,13 @@ class PrometheusExporter::Client
 
   def stop
     @mutex.synchronize do
-      @worker_thread&.kill
-      while @worker_thread.alive?
-        sleep 0.001
+      if @worker_thread
+        @worker_thread.kill
+        while @worker_thread.alive?
+          sleep 0.001
+        end
+        @worker_thread = nil
       end
-      @worker_thread = nil
     end
 
     close_socket!
@@ -141,9 +143,9 @@ class PrometheusExporter::Client
   end
 
   def ensure_worker_thread!
-    unless @worker_thread&.alive?
+    unless @worker_thread && @worker_thread.alive?
       @mutex.synchronize do
-        return if @worker_thread&.alive?
+        return if @worker_thread && @worker_thread.alive?
 
         @worker_thread = Thread.new do
           while true

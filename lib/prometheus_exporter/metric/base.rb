@@ -64,10 +64,10 @@ module PrometheusExporter::Metric
     end
 
     def to_prometheus_text
-      <<~TEXT
-        # HELP #{prefix(name)} #{help}
-        # TYPE #{prefix(name)} #{type}
-        #{metric_text}
+      <<-TEXT
+# HELP #{prefix(name)} #{help}
+# TYPE #{prefix(name)} #{type}
+#{metric_text}
       TEXT
     end
   end

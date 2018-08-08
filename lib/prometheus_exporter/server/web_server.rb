@@ -140,9 +140,9 @@ module PrometheusExporter::Server
       metrics << @sessions_total
       metrics << @bad_metrics_total
 
-      <<~TEXT
-      #{metrics.map(&:to_prometheus_text).join("\n\n")}
-      #{metric_text}
+      <<-TEXT
+#{metrics.map(&:to_prometheus_text).join("\n\n")}
+#{metric_text}
       TEXT
     end
 

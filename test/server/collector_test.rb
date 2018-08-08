@@ -27,11 +27,11 @@ class PrometheusCollectorTest < Minitest::Test
     collector.register_metric(metric)
     metric.observe(77)
     metric.observe(2, red: "alert")
-    text = <<~TXT
-      # HELP amazing amount of amazing
-      # TYPE amazing gauge
-      amazing 77
-      amazing{red="alert"} 2
+    text = <<-TXT
+# HELP amazing amount of amazing
+# TYPE amazing gauge
+amazing 77
+amazing{red="alert"} 2
     TXT
 
     assert_equal(text, collector.prometheus_metrics_text)
@@ -54,10 +54,10 @@ class PrometheusCollectorTest < Minitest::Test
 
     collector.process(json)
     collector.process(json)
-    text = <<~TXT
-      # HELP test_name test_help
-      # TYPE test_name gauge
-      test_name{key1="test1"} 2
+    text = <<-TXT
+# HELP test_name test_help
+# TYPE test_name gauge
+test_name{key1="test1"} 2
     TXT
 
     assert_equal(text, collector.prometheus_metrics_text)
@@ -80,10 +80,10 @@ class PrometheusCollectorTest < Minitest::Test
 
     collector.process(json)
     collector.process(json)
-    text = <<~TXT
-      # HELP test_name test_help
-      # TYPE test_name gauge
-      test_name{key1="test1"} -10
+    text = <<-TXT
+# HELP test_name test_help
+# TYPE test_name gauge
+test_name{key1="test1"} -10
     TXT
 
     assert_equal(text, collector.prometheus_metrics_text)

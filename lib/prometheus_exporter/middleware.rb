@@ -59,7 +59,7 @@ class PrometheusExporter::Middleware
     return unless start_time
 
     queue_time = request_start.to_f - start_time.to_f
-    queue_time unless queue_time.negative?
+    queue_time unless (queue_time < 0)
   end
 
   # need to use CLOCK_REALTIME, as nginx/apache write this also out as the unix timestamp
