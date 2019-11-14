@@ -34,7 +34,7 @@ module PrometheusExporter::Server
       metrics = {}
 
       @process_metrics.map do |m|
-        metric_key = m["metric_labels"].merge("pid" => m["pid"])
+        metric_key = (m["metric_labels"] || {}).merge("pid" => m["pid"])
         metric_key.merge!(m["custom_labels"] || {})
 
         PROCESS_GAUGES.map do |k, help|
